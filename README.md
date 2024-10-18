@@ -1,6 +1,6 @@
 # Life From ...
 
-img
+![gif]()
 
 ## Overview
 ‘Life From...’ is a portfolio website that explains several theories about the origin of life. It captivatingly presents animations that combine 3D models and GLSL within a modern framework.
