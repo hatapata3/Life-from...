@@ -1,0 +1,237 @@
+.main
+{
+    overflow: hidden;
+}
+.home__swiper
+{
+    position: relative;
+    z-index: var(--z-tooltip);
+}
+.home__article
+{
+    padding-top: 13rem;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.home__img,
+.home__shadow,
+.home__content
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.home__img
+{
+    object-fit: cover;
+    object-position: center;
+    opacity: .4;
+    z-index: -1;
+}
+.home__shadow
+{
+    background-color: hsla(0, 0%, 0%, .05);
+    z-index: -1;
+}
+.home__data
+{
+    text-align: center;
+}
+.home__subtitle
+{
+    font-size: var(--h3-font-size);
+    margin-bottom: .5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.home__title
+{
+    font-size: var(--biggest-font-size);
+    margin-bottom: 1.5rem;
+    font-weight: var(--font-bold);
+}
+.home__button
+{
+    color: var(--white-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: .5rem;
+    font-weight: var(--font-semi-bold);
+    pointer-events: painted;
+    transition: filter .4s;
+}
+.home__button i
+{
+    font-size: 1.5rem;
+    font-weight: initial;
+    transition: transform .4s, filter .4s;
+}
+.home__button:hover
+{
+    filter: var(--shadow);
+}
+.home__button:hover i
+{
+    transform: translateX(.5rem);
+    filter: var(--shadow);
+}
+.home__social
+{
+    position: absolute;
+    z-index: var(--z-tooltip);
+    left: 1.5rem;
+    bottom: 4rem;
+    display: grid;
+    row-gap: 1.5rem;
+}
+.home__social-link
+{
+    color: var(--white-color);
+    font-size: 1.5rem;
+    transition: filter .4s;
+}
+.home__social-link:hover
+{
+    filter: var(--shadow);
+}
+
+/* Swiper class */
+.swiper
+{
+    height: 100vh;
+    pointer-events: none;
+}
+.swiper-pagination
+{
+    position: absolute;
+    z-index: var(--z-tooltip);
+    width: initial;
+    height: max-content;
+    top: 6rem;
+    left: initial;
+    right: 4rem;
+    font-size: var(--big-font-size);
+    font-weight: var(--font-semi-bold);
+    display: flex;
+    column-gap: .25rem;
+    align-items: center;
+}
+.swiper-pagination-total
+{
+    font-size: var(--normal-font-size);
+}
+.swiper-button-prev::after,
+.swiper-button-next::after
+{
+    content: '';
+}
+.swiper-button-prev,
+.swiper-button-next
+{
+    font-size: 2rem;
+    color: var(--white-color);
+    width: initial;
+    height: initial;
+    position: initial;
+    outline: none;
+    cursor: pointer;
+    transition: filter .4s;
+}
+.swiper-button-prev:hover,
+.swiper-button-next:hover
+{
+    filter: var(--shadow);
+}
+.swiper-navigation
+{
+    position: absolute;
+    /* z-index: var(--z-tooltip); */
+    z-index: var(--z-fixed);
+    height: max-content;
+    bottom: 4rem;
+    right: 1.5rem;
+    display: flex;
+    column-gap: 2.5rem;
+}
+
+@media screen and (min-width: 1150px)
+{
+    .home__subtitle
+    {
+        margin-bottom: 1rem;
+        width: 600px;
+        display: block;
+    }
+    .home__title
+    {
+        margin-bottom: 2.5rem;
+    }
+    .home__content
+    {
+        max-width: 1120px;
+        margin-inline: auto;
+        left: 0;
+        right: 0;
+    }
+    .home__data
+    {
+        text-align: left;
+    }
+    .home__social
+    {
+        left: 0;
+    }
+    .swiper-pagination
+    {
+        top: 10rem;
+    }
+    .swiper-pagination-total
+    {
+        font-size: 1.5rem;
+    }
+    .swiper-navigation
+    {
+        right: 0;
+        column-gap: 3.5rem;
+    }
+    .swiper-button-prev,
+    .swiper-button-next
+    {
+        font-size: 3rem;
+    }
+}
+
+/* For taller devices */
+@media screen and (min-width: 800) and (min-height: 800px)
+{
+    .home__article
+    {
+        padding-top: 17rem;
+    }
+    .swiper-pagination
+    {
+        top: 13rem;
+    }
+}
+
+/* For 2K resolutions (2048 x 1152) */
+@media screen and (min-width: 2048px)
+{
+    .home__content
+    {
+        max-width: 1550px;
+    }
+    .home__swiper,
+    .home__content,
+    .home__img,
+    .home__shadow
+    {
+        max-height: 1000px;
+    }
+}
