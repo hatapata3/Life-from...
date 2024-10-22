@@ -30,7 +30,6 @@
     font-size: 1.5rem;
     cursor: pointer;
     filter: none;
-    /* transition: filter .4s; */
 }
 .nav__toggle:hover,
 .nav__close:hover
@@ -58,6 +57,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 3rem;
+    text-align: start;
 }
 .nav__link
 {
@@ -65,6 +65,7 @@
     font-weight: var(--font-semi-bold);
     transition: filter .4s;
     padding-bottom: 3px;
+    cursor: pointer;
 }
 .nav__link::after
 {
@@ -74,11 +75,13 @@
     border-bottom: 3px solid #fff;
     display: block;
 }
-.nav__link:hover
+.nav__link:hover,
+.nav__link.active
 {
     filter: var(--shadow);
 }
-.nav__link:hover::after
+.nav__link:hover::after,
+.nav__link.active::after
 {
     width: 62px;
 }
@@ -125,7 +128,8 @@
     {
         text-align: initial;
     }
-    .nav__link:hover::after
+    .nav__link:hover::after,
+    .nav__link.active:after
     {
         width: 100%;
     }

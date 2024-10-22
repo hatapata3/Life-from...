@@ -7,7 +7,7 @@ import particlesFragmentShader from '../assets/shaders/particles/fragment.glsl'
 import wobbleVertexShader from '../assets/shaders/wobble/vertex.glsl'
 import wobbleFragmentShader from '../assets/shaders/wobble/fragment.glsl'
 import gsap from "gsap"
-import useGame from "../stores/useGame.jsx"
+import useGame from "./stores/useGame.jsx"
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import CustomShaderMaterial from 'three-custom-shader-material/vanilla'
 import { useFrame } from "@react-three/fiber"
@@ -21,6 +21,7 @@ export default function Model()
     const firstUpdate = useRef(true)
     const { camera } = useThree()
     const page = useGame((state) => state.page)
+    const main = useGame((state) => state.main)
     const [ rot, setRot ] = useState(.5)
     const [sizes, setSizes] = useState({
         width: window.innerWidth,
@@ -42,8 +43,8 @@ export default function Model()
     const [cellsGeometries, setCellsGeometries] = useState([]) 
 
     const [colors] = useState({
-        colorA: [new THREE.Color('#ff004d'), new THREE.Color('#b76cfd'), new THREE.Color('#11808c')],
-        colorB: [new THREE.Color('#faef5d'), new THREE.Color('#ff2281'), new THREE.Color('#de4959')],
+        colorA: [new THREE.Color('#ff004d'), new THREE.Color('#b76cfd'), new THREE.Color('#11808c'), new THREE.Color('#1E4174'), new THREE.Color('#EC449B'), new THREE.Color('#ADEFD1')],
+        colorB: [new THREE.Color('#faef5d'), new THREE.Color('#ff2281'), new THREE.Color('#de4959'), new THREE.Color('#DDA94B'), new THREE.Color('#99F443'), new THREE.Color('#00203F')],
         colorC: [new THREE.Color('#613659'), new THREE.Color('#175873'), new THREE.Color('#57330b')],
         colorD: [new THREE.Color('#7e2553'), new THREE.Color('#0C1446'), new THREE.Color('#388322')]
     })
@@ -53,7 +54,7 @@ export default function Model()
         
         particles.current.geometry.attributes.position = particles.current.positions[particles.current.index]
         particles.current.geometry.attributes.aPositionTarget = particles.current.positions[index]
-        if(index == 1)
+        if(index == 1 || index > 2)
         {
             setRot(0)
             const balance = particles.current.rotation.y - particles.current.rotation.y % (Math.PI * 2)
@@ -78,15 +79,18 @@ export default function Model()
         particles.current.index = index
         
 
-        var tl = gsap.timeline()
-        tl.to(cells.current.material.uniforms.uOpacity, { value: 0, duration: 1, ease: 'liner' },0)
-        tl.to(cells.current.material.uniforms.uOpacity, { value: 1, duration: 1, ease: 'liner' }, 1.5)
-        setTimeout(() => 
+        if(index <= 2)
         {
-            cells.current.geometry = cellsGeometries[index]
-            cells.current.material.uniforms.uColorA.value = colors.colorC[index]
-            cells.current.material.uniforms.uColorB.value = colors.colorD[index]
-        },[1000])
+            var tl = gsap.timeline()
+            tl.to(cells.current.material.uniforms.uOpacity, { value: 0, duration: 1, ease: 'liner' },0)
+            tl.to(cells.current.material.uniforms.uOpacity, { value: 1, duration: 1, ease: 'liner' }, 1.5)
+            setTimeout(() => 
+            {
+                cells.current.geometry = cellsGeometries[index]
+                cells.current.material.uniforms.uColorA.value = colors.colorC[index]
+                cells.current.material.uniforms.uColorB.value = colors.colorD[index]
+            },[1000])
+        }
     }
 
     useLayoutEffect(() =>
@@ -209,6 +213,47 @@ export default function Model()
             })
             
     },[])
+
+    useEffect(() =>
+    {
+        if(!firstUpdate.current)
+        {
+            if(main != 'home')
+            {
+                gsap.to(cells.current.material.uniforms.uOpacity, { value: 0, duration: 2, ease: 'liner' })
+                if(main == 'project')
+                    morph(3)
+                else if(main == 'news')
+                    morph(4)
+                else if(main == 'contact')
+                    morph(5)
+            }
+            else
+            {
+                morph(page)
+            }
+
+            if(sizes.width >= 1150)
+            {
+                if(main == 'project' || main == 'contact')
+                {
+                    gsap.to(particles.current.position, {x: 4, duration: .8})
+                }
+                else if(main == 'news')
+                {
+                    gsap.to(particles.current.position, {x: -4, duration: .8})
+                }
+                else
+                {
+                    gsap.to(particles.current.position, {x: 0, duration: .8})
+                }
+            }
+            else
+            {
+                gsap.to(particles.current.position, {x: 0, duration: .8})
+            }
+        }
+    }, [main, sizes.width])
     
     useEffect(() =>
     {
@@ -228,7 +273,6 @@ export default function Model()
     })
     
 
-    // useEffect(())
     
 
     window.addEventListener('resize', () =>
@@ -256,7 +300,7 @@ export default function Model()
             snap={{ mass: 4, tension: 400 }}
         >
         <ambientLight intensity={3} />
-            <Float rotationIntensity={ 0.4 }>
+            <Float rotationIntensity={ 1 }>
                 <points ref={particles} rotation={[-.2,.1, 0]} scale={.8} />
                 <mesh ref={cells} rotation={[-.2,.1, 0]} scale={.8} >
                 </mesh>

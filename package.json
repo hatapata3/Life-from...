@@ -1,8 +1,9 @@
 {
-  "name": "vite-project",
+  "name": "dna",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "hatapata3",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
@@ -12,12 +13,14 @@
   "dependencies": {
     "@react-three/drei": "^9.112.0",
     "@react-three/fiber": "^8.17.7",
+    "gsap": "^3.12.5",
     "lava": "^0.13.6",
     "leva": "^0.9.35",
     "r3f-perf": "^7.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remixicon": "^4.3.0",
+    "scrollreveal": "^4.0.9",
     "swiper": "^11.1.12",
     "three": "^0.168.0",
     "three-custom-shader-material": "5.4",
